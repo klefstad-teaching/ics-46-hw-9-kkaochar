@@ -7,8 +7,11 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 }
 
 vector<int> extract_shortest_path(const vector<int>& /*distances*/, const vector<int>& previous, int destination) {
-    cout << previous << destination << endl;
     vector<int> shortest_path;
+    for(int e = previous[destination]; e != -1 ; e = previous[e]) {
+        shortest_path.push_back(e);
+    }
+    shortest_path.push_back(0);
     return shortest_path;
 }
 
