@@ -9,17 +9,25 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
 }
 
 bool is_adjacent(const string& word1, const string& word2) {
-    return word1 != word2; // placeholder
+    return edit_distance_within(word1, word2, 1);
 }
 
-vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
-    vector<string> ladder;
-    if (begin_word != end_word) return ladder; // begin and end word shouldn't be equal
-    return ladder; // placeholder
+
+
+void lower_word(string & word) {
+    if (word[0] >= 'A' && word[0] <= 'Z')
+        word[0] += 32;
 }
 
 void load_words(set<string> & word_list, const string& file_name) {
-    cout << word_list << file_name; // placeholder
+    ifstream in_file(file_name);
+    if (!in_file) { return; }
+    string word;
+    while (in_file >> word) {
+        lower_word(word);
+        word_list.insert(word);
+    }
+    in_file.close();
 }
 
 void print_word_ladder(const vector<string>& ladder) {
