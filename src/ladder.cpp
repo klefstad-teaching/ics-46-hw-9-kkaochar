@@ -15,7 +15,7 @@ bool is_adjacent(const string& word1, const string& word2) {
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
     queue<vector<string>> ladder_queue;
     ladder_queue.push({begin_word});
-    if (begin_word == end_word || !word_list.count(end_word)) return ladder_queue.front();
+    if (begin_word == end_word || word_list.find(end_word) == word_list.end()) return ladder_queue.front();
     set<string> visited;
     visited.insert(begin_word);
     while (!ladder_queue.empty()) {
@@ -23,7 +23,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
         ladder_queue.pop();
         string last_word = ladder[ladder.size() - 1];
         for (string word : word_list) {
-            if (is_adjacent(last_word, word) && !visited.count(word)) {
+            if (is_adjacent(last_word, word) && visited.find(word) == visited.end()) {
                 visited.insert(word);
                 vector<string> new_ladder(ladder);
                 new_ladder.push_back(word);
@@ -32,7 +32,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
             }
         }
     }
-    return ladder_queue.front();
+    return {}; // no solution found
 }
 
 void lower_word(string & word) {
