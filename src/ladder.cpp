@@ -5,7 +5,17 @@ void error(string word1, string word2, string msg) {
 }
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
-    return str1 != str2 || d; // placeholder
+    int comp = str1.size() - str2.size();
+    if (comp < -1 || 1 < comp) return false;
+    int size = str1.size() > str2.size() ? str1.size() : str2.size();
+    for (int i = 0, j = 0; i < size && d >= 0; ++i, ++j) {
+        if (str1[i] != str2[j]) {
+            --d;
+            if (comp == 1 && str1[i + 1] == str2[j]) ++i;
+            if (comp == -1 && str1[i] == str2[j + 1]) ++j;
+        }
+    }
+    return d == 0;
 }
 
 bool is_adjacent(const string& word1, const string& word2) {
