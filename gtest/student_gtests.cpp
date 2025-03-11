@@ -48,3 +48,15 @@ TEST(Ladder, test6) {
   load_words(word_list, "./src/words.txt");
   ASSERT_EQ(generate_word_ladder("car", "cheat", word_list).size(), 4);
 }
+
+TEST(Ladder, is_adjacent_same_word) {
+  ASSERT_TRUE(is_adjacent("apple", "apple"));
+}
+
+TEST(Ladder, is_adjacent_same_size_true) {
+  ASSERT_TRUE(is_adjacent("hate", "haze"));
+}
+
+TEST(Ladder, is_adjacent_same_size_false) {
+  ASSERT_FALSE(is_adjacent("hate", "hose"));
+}
