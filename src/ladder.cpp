@@ -8,14 +8,15 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
     int comp = str1.size() - str2.size();
     if (comp < -1 || 1 < comp) return false;
     int size = str1.size() > str2.size() ? str1.size() : str2.size();
-    for (int i = 0, j = 0; i < size && d >= 0; ++i, ++j) {
+    int diff = d;
+    for (int i = 0, j = 0; i < size && diff >= 0; ++i, ++j) {
         if (str1[i] != str2[j]) {
-            --d;
+            --diff;
             if (comp == 1 && str1[i + 1] == str2[j]) ++i;
             if (comp == -1 && str1[i] == str2[j + 1]) ++j;
         }
     }
-    return d == 0;
+    return 0 <= diff && diff <= d;
 }
 
 bool is_adjacent(const string& word1, const string& word2) {
