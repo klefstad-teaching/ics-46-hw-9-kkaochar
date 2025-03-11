@@ -12,7 +12,28 @@ bool is_adjacent(const string& word1, const string& word2) {
     return edit_distance_within(word1, word2, 1);
 }
 
-
+vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
+    queue<vector<string>> ladder_queue;
+    ladder_queue.push({begin_word});
+    if (begin_word == end_word || !word_list.count(end_word)) return ladder_queue.front();
+    set<string> visited;
+    visited.insert(begin_word);
+    while (!ladder_queue.empty()) {
+        vector<string> ladder = ladder_queue.front();
+        ladder_queue.pop();
+        string last_word = ladder[ladder.size() - 1];
+        for (string word : word_list) {
+            if (is_adjacent(last_word, word) && !visited.count(word)) {
+                visited.insert(word);
+                vector<string> new_ladder(ladder);
+                new_ladder.push_back(word);
+                if (word == end_word) return new_ladder;
+                ladder_queue.push(new_ladder);
+            }
+        }
+    }
+    return ladder_queue.front();
+}
 
 void lower_word(string & word) {
     if (word[0] >= 'A' && word[0] <= 'Z')
